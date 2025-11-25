@@ -1,0 +1,207 @@
+/* ------------------------
+   Portfolio styles (editable)
+   Files: index.html / styles.css / script.js
+   Edit: assets/*.png, avatar image, email in index.html
+   ------------------------ */
+
+/* Variables */
+:root{
+  --bg: #0b1220;
+  --surface: rgba(255,255,255,0.02);
+  --text: #e6eef6;
+  --muted: #9aa4b2;
+  --accent: #06b6d4;
+  --card-radius: 12px;
+  --maxw: 1100px;
+  --gap: 18px;
+  --icon-color: #fff; /* dynamic: JS toggles to black in light mode */
+  --btn-glow: 0 6px 26px rgba(6,182,212,0.12);
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+  color-scheme: dark;
+}
+
+/* Light theme overrides */
+:root.light{
+  --bg: #f5f7fb;
+  --surface: rgba(2,6,23,0.02);
+  --text: #061025;
+  --muted: #4b5563;
+  --accent: #0ea5a1;
+  --icon-color: #000;
+  color-scheme: light;
+}
+
+/* Basic reset */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;width:100%}
+body{
+  background: radial-gradient(1200px 600px at 10% 10%, rgba(6,182,212,0.06), transparent 12%),
+              radial-gradient(900px 500px at 90% 90%, rgba(124,58,237,0.04), transparent 14%),
+              var(--bg);
+  color:var(--text);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  line-height:1.5;
+  min-height:100vh;
+  overflow-x:hidden; /* prevents horizontal scroll */
+  padding:20px;
+}
+
+/* particle layer (behind content) */
+.particles{
+  position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden;
+}
+.p{ position:absolute; border-radius:50%; opacity:0.12; filter: blur(10px) saturate(120%); transform: translateZ(0); }
+.p1{ width:42px;height:42px; left:8%; top:18%; background:linear-gradient(45deg,#06b6d4,#0ea5a1); animation:floatA 9s ease-in-out infinite; }
+.p2{ width:18px;height:18px; left:26%; top:6%; background:linear-gradient(45deg,#7c3aed,#06b6d4); animation:floatB 12s ease-in-out infinite; }
+.p3{ width:28px;height:28px; left:45%; top:24%; background:linear-gradient(45deg,#f97316,#ef4444); animation:floatC 11s ease-in-out infinite; }
+.p4{ width:14px;height:14px; left:72%; top:8%; background:linear-gradient(45deg,#06b6d4,#7c3aed); animation:floatB 10s ease-in-out infinite; }
+.p5{ width:36px;height:36px; left:84%; top:40%; background:linear-gradient(45deg,#7c3aed,#06b6d4); animation:floatA 14s ease-in-out infinite; }
+.p6{ width:20px;height:20px; left:12%; top:66%; background:linear-gradient(45deg,#ef4444,#f97316); animation:floatC 13s ease-in-out infinite; }
+.p7{ width:30px;height:30px; left:40%; top:72%; background:linear-gradient(45deg,#06b6d4,#0ea5a1); animation:floatB 12s ease-in-out infinite; }
+.p8{ width:16px;height:16px; left:70%; top:82%; background:linear-gradient(45deg,#7c3aed,#f97316); animation:floatA 8s ease-in-out infinite; }
+.p9{ width:10px;height:10px; left:88%; top:64%; background:linear-gradient(45deg,#06b6d4,#7c3aed); animation:floatC 9s ease-in-out infinite; }
+.p10{ width:22px;height:22px; left:52%; top:6%; background:linear-gradient(45deg,#ef4444,#06b6d4); animation:floatB 16s ease-in-out infinite; }
+
+@keyframes floatA { 0%{ transform: translateY(0) }50%{ transform: translateY(-28px) }100%{ transform: translateY(0) } }
+@keyframes floatB { 0%{ transform: translateY(0) }50%{ transform: translateY(-16px) }100%{ transform: translateY(0) } }
+@keyframes floatC { 0%{ transform: translateY(0) }50%{ transform: translateY(-36px) }100%{ transform: translateY(0) } }
+
+/* site container */
+.site{ position:relative; max-width:var(--maxw); margin:0 auto; padding:22px; z-index:2; }
+
+/* header */
+.header{ display:flex; justify-content:space-between; align-items:center; gap:var(--gap); margin-bottom:18px; }
+.brand{ display:flex; gap:14px; align-items:center; }
+.avatar{ width:72px; height:72px; border-radius:14px; background:linear-gradient(135deg,#06b6d4,#7c3aed); display:grid; place-items:center; overflow:hidden; position:relative; }
+.avatar img{ width:100%; height:100%; object-fit:cover; display:block; }
+.avatar .initials{ font-weight:800; color:#021126; font-size:20px; display:block; }
+.brand-meta .fullname{ font-size:20px; margin-bottom:4px; }
+.muted{ color:var(--muted); font-size:13px; }
+
+/* actions */
+.actions{ display:flex; align-items:center; gap:12px; }
+.theme-toggle{
+  width:52px; height:52px; border-radius:12px; display:grid; place-items:center;
+  background:var(--surface); border:1px solid rgba(255,255,255,0.04); cursor:pointer; color:var(--icon-color);
+  transition: transform .12s ease, box-shadow .18s ease;
+}
+.theme-toggle:active{ transform:scale(.98); }
+.theme-svg{ display:block; width:26px; height:26px; }
+
+/* social icons */
+.social{ display:flex; gap:10px; align-items:center; }
+.social-btn{ display:inline-grid; place-items:center; min-width:48px; height:48px; padding:6px; border-radius:12px; background:transparent; border:1px solid rgba(255,255,255,0.04); color:var(--icon-color); transition: transform .18s ease, box-shadow .18s ease; }
+.social-btn svg{ width:20px; height:20px; display:block; }
+.social-btn:hover{ transform:translateY(-6px); box-shadow:var(--btn-glow); }
+
+/* main & hero */
+.main{ margin-top:8px; }
+.hero{ display:grid; grid-template-columns: 1fr 320px; gap:22px; background:var(--surface); padding:22px; border-radius:12px; box-shadow:0 10px 30px rgba(2,6,23,0.45); }
+.hero-content h2{ margin-bottom:8px; font-size:22px; }
+.lead{ color:var(--muted); margin-bottom:12px; }
+.cta-row{ display:flex; gap:12px; margin-top:8px; }
+.btn{ display:inline-block; padding:12px 16px; background:var(--accent); color:#021126; border-radius:10px; font-weight:700; text-decoration:none; box-shadow:var(--btn-glow); transition: transform .12s ease, box-shadow .12s ease; }
+.btn:hover{ transform:translateY(-6px); box-shadow:0 14px 48px rgba(6,182,212,0.14); }
+.btn.ghost{ background:transparent; color:var(--muted); border:1px solid rgba(255,255,255,0.04); box-shadow:none; }
+.small{ padding:8px 10px; font-size:14px; }
+
+/* quick cards in aside */
+.quick .card{ background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); padding:12px; border-radius:10px; margin-bottom:12px; color:var(--text); }
+.card.small{ padding:12px; }
+
+/* projects */
+.section{ margin-top:22px; }
+.projects-grid{ display:grid; grid-template-columns: repeat(auto-fit,minmax(260px,1fr)); gap:14px; margin-top:12px; }
+.card.project{ display:flex; gap:12px; align-items:flex-start; padding:12px; border-radius:12px; background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.01)); box-shadow:0 10px 30px rgba(2,6,23,0.35); }
+.thumb{ min-width:140px; height:100px; background:#071021; border-radius:10px; overflow:hidden; display:grid; place-items:center; }
+.thumb img{ width:100%; height:100%; object-fit:cover; display:block; opacity:1; transition:opacity .18s ease; }
+.card-body h4{ margin-bottom:6px; font-size:16px; }
+.desc{ color:var(--muted); margin-bottom:8px; font-size:14px; }
+.meta{ display:flex; align-items:center; gap:10px; font-size:13px; color:var(--muted); width:100%; }
+.links{ margin-left:auto; display:flex; gap:10px; }
+.links a{ color:var(--accent); text-decoration:none; font-weight:700; }
+
+/* about & contact */
+.section p{ color:var(--text); max-width:70ch; line-height:1.6; }
+
+/* contact form inline */
+.contact-form{ display:flex; gap:8px; margin-top:8px; align-items:center; }
+.contact-form input[type="text"]{ flex:1; padding:10px 12px; border-radius:8px; border:1px solid rgba(255,255,255,0.04); background:transparent; color:var(--text); }
+.contact-form input::placeholder{ color:var(--muted); }
+
+/* footer */
+.footer{ display:flex; justify-content:space-between; margin-top:20px; color:var(--muted); font-size:13px; }
+
+/* small helper classes */
+.muted.tiny{ font-size:12px; opacity:0.9 }
+.sr-only{ position:absolute !important; height:1px; width:1px; overflow:hidden; clip:rect(1px,1px,1px,1px); white-space:nowrap; }
+/* icon animations (sun rays & moon crater) */
+/*
+
+this will not use another one in end
+
+.rays{ transform-origin:center; transition: transform 420ms cubic-bezier(.2,.9,.3,1); }
+:root.light .rays{ transform: rotate(0deg) scale(1); }
+:root .rays{ transform: rotate(45deg) scale(.9); }
+.crater{ transition: opacity 360ms ease, transform 360ms ease; }
+:root.light .crater{ opacity:0; transform: translateY(-2px) scale(.6); }
+:root .crater{ opacity:1; transform: translateY(0) scale(1); }
+
+/*
+
+
+/* responsive: mobile-first */
+@media (max-width:900px){
+  .hero{ grid-template-columns: 1fr; padding:18px; }
+  .header{ flex-direction:column; align-items:flex-start; gap:12px; }
+  .actions{ width:100%; justify-content:space-between; }
+  .cta-row{ flex-direction:column; gap:10px; }
+  .projects-grid{ grid-template-columns: 1fr; }
+  .thumb{ width:100%; min-width:0; height:140px; }
+  .card.project{ flex-direction:column; align-items:stretch; }
+  .social-btn{ min-width:44px; height:44px; }
+  .theme-toggle{ width:48px; height:48px; }
+}
+
+/* reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce){
+  .p, .rays, .crater, .social-btn, .theme-toggle, .btn { animation: none !important; transition: none !important; transform: none !important; }
+  .p{ opacity:0.08; }
+}
+
+/* (full styles file as before — paste your previous styles.css)
+   Below are the new/important rules to include near the bottom of your file. */
+
+/* Hidden utility for extra projects */
+.hidden { display: none !important; }
+
+/* reveal animation for more projects */
+.reveal {
+  animation: fadeInUp .42s cubic-bezier(.2,.9,.3,1) both;
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* smaller tweak: center the Show more button on very narrow screens */
+@media (max-width:480px){
+  #showMoreBtn { width:100%; padding-left:0; padding-right:0; }
+}
+
+/* -------------------------
+   Force show/hide for theme icon
+   ------------------------- */
+
+/* base: dark mode — show moon, hide sun */
+.theme-svg .sun { opacity: 0; pointer-events: none; transition: opacity 220ms ease; }
+.theme-svg .moon { opacity: 1; pointer-events: auto; transition: opacity 220ms ease; }
+
+/* light mode: show sun, hide moon */
+:root.light .theme-svg .sun { opacity: 1; pointer-events: auto; }
+:root.light .theme-svg .moon { opacity: 0; pointer-events: none; }
+
+/* remove any transform-based visibility for the inner parts (avoid merge glitches) */
+.theme-svg .rays,
+.theme-svg .crater { transition: none !important; }
