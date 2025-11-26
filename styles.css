@@ -189,6 +189,9 @@ this will not use another one in end
 @media (max-width:480px){
   #showMoreBtn { width:100%; padding-left:0; padding-right:0; }
 }
+#showMoreBtn{
+  cursor: pointer;
+}
 
 /* -------------------------
    Force show/hide for theme icon
@@ -205,3 +208,92 @@ this will not use another one in end
 /* remove any transform-based visibility for the inner parts (avoid merge glitches) */
 .theme-svg .rays,
 .theme-svg .crater { transition: none !important; }
+
+/* Skills (simple static cards with animated fill on load) */
+.skills-section { padding: 2rem 1rem; background: #ffffff08; border-radius: 10px; margin-top: 1.5rem; box-shadow: 0 6px 18px rgba(15,23,36,0.04); }
+.skills-section h2 { margin: 0 0 1rem 0; font-size: 1.25rem; }
+
+.skills-list { display:grid; gap:1rem; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); }
+
+.skill {
+  display:flex;
+  flex-direction:column;
+  gap:.5rem;
+  padding:.85rem;
+  border:1px solid #eef2f6;
+  border-radius:8px;
+  background: linear-gradient(180deg,#ffffff4b,#ffffff12);
+}
+
+/* header with name and percent */
+.skill-head { display:flex; justify-content:space-between; align-items:center; gap:.5rem; }
+.skill-name { font-weight:600; font-size:0.98rem; color:#ffffff; }
+.skill-val { font-weight:700; min-width:44px; text-align:right; color:#ffffff; }
+
+/* bar */
+.skill-bar { background:#f1f5f9; height:12px; border-radius:999px; overflow:hidden; position:relative; }
+.skill-fill {
+  height:100%;
+  width:0%;
+  border-radius:999px;
+  background: linear-gradient(90deg, #06b6d4, #0ea5a4 60%);
+  box-shadow: 0 4px 12px rgba(14,165,164,0.12), inset 0 -6px 14px rgba(255,255,255,0.06);
+  transition: width 900ms cubic-bezier(.2,.9,.2,1);
+}
+
+/* subtle ticks below */
+.skill-ticks { display:flex; justify-content:space-between; font-size:11px; color:#94a3b8; margin-top:6px; }
+
+/* responsive tweaks */
+@media (max-width:640px) {
+  .skills-section { padding:1rem; }
+  .skill { padding:.6rem; }
+  .skill-val { min-width:40px; font-size:.95rem; }
+}
+
+/* Bio & Education responsive two-box layout */
+.bio-edu { padding: 1.6rem 1rem; margin-top: 1.25rem; }
+.section-title { margin-bottom: 0.75rem; font-size: 1.25rem; }
+
+/* dynamic responsive grid: keeps boxes equal height and fits as many columns as possible */
+.bio-edu-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  align-items: start;
+}
+
+/* shared card style */
+.card {
+  background: #ffffff08;
+  border: 1px solid #e6eef6;
+  border-radius: 10px;
+  padding: 1rem;
+  box-shadow: 0 6px 18px rgba(15,23,36,0.04);
+}
+
+/* titles */
+.card-title { margin: 0 0 0.6rem 0; font-size: 1rem; color: #ffffff; }
+
+/* Personal details list */
+.personal-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.45rem; margin-bottom: 3.2rem; }
+.personal-list li { display: flex; gap: 0.6rem; align-items: center; font-size: 0.95rem; }
+.personal-list .label { min-width: 92px; font-weight: 600; color: #ffffff; }
+.personal-list .value { color: #ffffff; word-break: break-word; }
+
+/* Education list */
+.edu-list { display: grid; gap: 0.75rem; margin-top: 0.25rem; }
+.edu-item { padding: 0.5rem; border-radius: 8px; background: linear-gradient(180deg,#ffffff28,#ffffff10); border: 1px solid #f0f6fb; }
+.edu-main { display:flex; flex-direction:column; gap:0.1rem; }
+.edu-degree { margin: 0; font-size: 0.98rem; font-weight: 600; color: #ffffff; }
+.edu-meta { font-size: 0.86rem; color: #bbc4d0; }
+.edu-note { margin: 0.45rem 0 0 0; font-size: 0.9rem; color: #a3a9b1; }
+
+/* tighter footprint on small screens */
+@media (max-width: 640px) {
+  .bio-edu { padding: 1rem 0.8rem; }
+  .card { padding: 0.85rem; }
+  .personal-list .label { min-width: 80px; font-size: 0.92rem; }
+  .personal-list .value, .edu-degree { font-size: 0.95rem; }
+}
+
