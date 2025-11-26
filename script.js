@@ -115,4 +115,72 @@
   // Update year
   if(YEAR) YEAR.textContent = new Date().getFullYear();
 
+  // Simple Skills: render cards and animate fills once on load
+(() => {
+  const skills = [
+    { id: 'html', name: 'HTML', value: 85 },
+    { id: 'css', name: 'CSS', value: 70 },
+    { id: 'js', name: 'JavaScript', value: 40 },
+    { id: 'Photoshop', name: 'Photoshop', value: 85 },
+    { id: 'daVinciResolve', name: 'Da Vinci Resolve', value: 89 },
+  ];
+
+  const skillsList = document.getElementById('skillsList');
+  if (!skillsList) return;
+
+  function createCard(skill) {
+    const card = document.createElement('div');
+    card.className = 'skill';
+    card.setAttribute('role','listitem');
+
+    card.innerHTML = `
+      <div class="skill-head">
+        <div class="skill-name">${skill.name}</div>
+        <div class="skill-val" aria-live="polite"><span class="skill-percent">0</span>%</div>
+      </div>
+      <div class="skill-bar" aria-hidden="true">
+        <div class="skill-fill" data-target="${skill.value}"></div>
+      </div>
+      <div class="skill-ticks"><span>0%</span><span>50%</span><span>100%</span></div>
+    `;
+    return card;
+  }
+
+  function render() {
+    skillsList.innerHTML = '';
+    skills.forEach(s => skillsList.appendChild(createCard(s)));
+  }
+
+  function animate(duration = 900, stagger = 120) {
+    const fills = skillsList.querySelectorAll('.skill-fill');
+    fills.forEach((fill, i) => {
+      const target = Math.max(0, Math.min(100, Number(fill.dataset.target) || 0));
+      // staggered start for nicer effect
+      setTimeout(() => {
+        // trigger transition
+        fill.style.width = target + '%';
+
+        // animate the numeric counter in header
+        const headerPercent = fill.closest('.skill').querySelector('.skill-percent');
+        const start = 0;
+        const startTime = performance.now();
+        function step(now) {
+          const t = Math.min(1, (now - startTime) / duration);
+          const current = Math.round(start + (target - start) * t);
+          headerPercent.textContent = current;
+          if (t < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+      }, i * stagger);
+    });
+  }
+
+  // init
+  render();
+  // small delay so layout paints first
+  setTimeout(() => animate(900, 120), 250);
+
+})();
+
+
 })();
